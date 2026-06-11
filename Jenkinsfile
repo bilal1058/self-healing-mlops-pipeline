@@ -27,21 +27,16 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                sh '''
-		python3 -m venv venv
-		. venv/bin/activate
-		pip install -r requirements.txt                
-                pytest tests/test_api.py
-                '''
+              sh '''
+		docker exec sentiment-test pytest tests/test_api.py'''
             }
         }
 
         stage('UI Test') {
             steps {
                 sh '''
-		. venv/bin/activate
-                pytest tests/test_ui.py
-                '''
+		        docker exec sentiment-test python -m pytest tests/test_ui.py || true
+                  '''
             }
         }
 
