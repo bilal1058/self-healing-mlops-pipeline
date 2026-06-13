@@ -80,6 +80,7 @@ pipeline {
                 kubectl rollout status deployment/sentiment-green-deployment --timeout=300s
                 kubectl get pods
                 kubectl get svc sentiment-api-service
+                sleep 20
                 curl -f http://13.207.67.12:32500/health
                 '''
             }
