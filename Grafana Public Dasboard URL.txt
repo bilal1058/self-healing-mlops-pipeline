@@ -1,1 +1,1 @@
-http://13.207.67.12:3000/dashboards
+http://13.207.67.12:3000/public-dashboards/61f1ac3f580f484bad05dc009ad5c0d8
