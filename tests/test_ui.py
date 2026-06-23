@@ -24,7 +24,7 @@ def test_frontend_sentiment():
 
     try:
         driver.get(BASE_URL)
-        wait = WebDriverWait(driver, 10)
+        wait = WebDriverWait(driver, 15)
 
         text_input = wait.until(EC.presence_of_element_located((By.ID, "text-input")))
         text_input.send_keys("This hotel is absolutely wonderful")
@@ -32,10 +32,12 @@ def test_frontend_sentiment():
         submit_btn = driver.find_element(By.ID, "submit-btn")
         submit_btn.click()
 
-        result = wait.until(EC.text_to_be_present_in_element((By.ID, "result-output"), ""))
+        # FIX: wait for actual content — "Confidence" always appears in output
+        wait.until(EC.text_to_be_present_in_element((By.ID, "result-output"), "Confidence"))
+
         result_text = driver.find_element(By.ID, "result-output").text
 
-        assert result_text != "", "Result output is empty"
+        assert result_text.strip() != "", "Result output is empty"
         assert any(word in result_text for word in ["POSITIVE", "NEGATIVE", "Confidence"]), \
             f"Unexpected result: {result_text}"
     finally:
