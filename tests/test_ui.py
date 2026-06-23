@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time
 
-BASE_URL = "http://13.207.67.12:32500"
+BASE_URL = "http://35.154.1.53:32500"
 
 def test_frontend_sentiment():
     options = Options()
