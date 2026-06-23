@@ -47,21 +47,22 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
-            steps {
-                sh '''
-                    echo "=== Running unit tests inside container ==="
-                    # Install pytest+requests inside the already-running container
-                    docker exec sentiment-test pip install pytest requests --quiet
-
-                    # Run tests inside the container (BASE_URL is localhost inside container)
-                    docker exec \
-                        -e BASE_URL=http://localhost:5000 \
-                        sentiment-test \
-                        python -m pytest tests/test_api.py -v
-                '''
+            stage('UI Test') {
+                steps {
+                    sh '''
+                        echo "=== Building test runner image ==="
+                        docker build -t sentiment-test-runner:latest -f Dockerfile.test .
+            
+                        echo "=== Running UI tests ==="
+                        docker run --rm \
+                            --network host \
+                            -v $(pwd)/tests:/workspace/tests \
+                            -e BASE_URL=http://localhost:5000 \
+                            sentiment-test-runner:latest \
+                            pytest tests/test_ui.py -v
+                    '''
+                }
             }
-        }
 
         stage('UI Test') {
             steps {
