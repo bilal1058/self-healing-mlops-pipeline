@@ -4,6 +4,7 @@ pipeline {
         DOCKER_IMAGE_UNSTABLE = "bilal888/sentiment-api:unstable"
         DOCKER_IMAGE_STABLE   = "bilal888/sentiment-api:stable"
         EC2_IP                = "35.154.1.53"
+        PATH                  = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin"
     }
     stages {
 
