@@ -20,7 +20,15 @@ pipeline {
                 docker rm -f sentiment-test || true
                 docker build -t sentiment-api:test .
                 docker run -d --name sentiment-test -p 5000:5000 sentiment-api:test
-                sleep 30
+                echo "Waiting for application..."
+				for i in $(seq 1 60); do
+				    if curl -fs http://localhost:5000/health > /dev/null; then
+				        echo "Application is ready."
+				        break
+				    fi
+				    echo "Attempt $i: service not ready yet..."
+				    sleep 2
+				done
                 curl -f http://localhost:5000/health
                 '''
             }
@@ -55,11 +63,11 @@ pipeline {
                     sh '''
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-                    docker build -t $DOCKER_IMAGE_UNSTABLE .
+                    docker tag sentiment-api:test $DOCKER_IMAGE_UNSTABLE
                     docker push $DOCKER_IMAGE_UNSTABLE
 
                     git fetch origin stable-fallback
-	            git checkout -B stable-fallback origin/stable-fallback
+	            	git checkout -B stable-fallback origin/stable-fallback
                     docker build -t $DOCKER_IMAGE_STABLE .
                     docker push $DOCKER_IMAGE_STABLE
 
@@ -80,8 +88,16 @@ pipeline {
                 kubectl rollout status deployment/sentiment-green-deployment --timeout=300s
                 kubectl get pods
                 kubectl get svc sentiment-api-service
-                sleep 20
-                curl -f http://13.207.67.12:32500/health
+                echo "Waiting for service..."
+				for i in $(seq 1 60); do
+				    if curl -fs http://35.154.1.53:32500/health > /dev/null; then
+				        echo "Service is healthy."
+				        break
+				    fi
+				    echo "Attempt $i: service not ready..."
+				    sleep 5
+				done
+                curl -f http://35.154.1.53:32500/health
                 '''
             }
         }
