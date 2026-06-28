@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sentiment-api
-          image: bilal888/sentiment-api:unstable
+          image: YOUR_DOCKERHUB_USER/sentiment-api:unstable
           ports:
             - containerPort: 5000
           volumeMounts:
