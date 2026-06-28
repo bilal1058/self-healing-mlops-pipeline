@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_UNSTABLE = "bilal888/sentiment-api:unstable"
+        DOCKER_IMAGE_UNSTABLE = "bilal888/sentiment-api:unstable" #Build Yours or can use mine
         DOCKER_IMAGE_STABLE   = "bilal888/sentiment-api:stable"
-        EC2_IP                = "35.154.1.53"
+        EC2_IP                = "YOUR_EC2_IP"
         PATH                  = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin"
     }
     stages {
@@ -92,8 +92,9 @@ pipeline {
                         PUSH_UNSTABLE_PID=$!
 
                         rm -rf /tmp/stable-build
-                        git clone --branch stable-fallback --depth 1 \
-                            https://github.com/bilal1058/selfhealing-mlops-FA23-BAI-029.git \
+                        
+                        git clone --branch stable-fallback --depth 1 \     #YOUR REPO
+                            https://github.com/YOUR_REPO.git \
                             /tmp/stable-build
 
                         docker pull ${DOCKER_IMAGE_STABLE} || true
