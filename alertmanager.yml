@@ -10,7 +10,7 @@ route:
 receivers:
   - name: jenkins-rollback-webhook
     webhook_configs:
-      - url: 'http://EC2_IP:8080/generic-webhook-trigger/invoke?token=ROLLBACK_E77CC3_TOKEN'
+      - url: 'http://YOUR_EC2_IP:8080/generic-webhook-trigger/invoke?token=ROLLBACK_E77CC3_TOKEN'
         send_resolved: false
         http_config:
           basic_auth:
