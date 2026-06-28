@@ -1,1 +1,3 @@
-http://35.154.1.53:3000/public-dashboards/df411ec8aba042f2a85d61f6fa1cd00b
+#Get Yours from Grafana by clicking on share as external
+#It will look like this
+http://YOUR_EC2_IP:3000/public-dashboards/df411ec8aba042f2a85d61f6fa1cd00b
