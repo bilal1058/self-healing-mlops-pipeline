@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_UNSTABLE = "bilal888/sentiment-api:unstable" #Build Yours or can use mine
-        DOCKER_IMAGE_STABLE   = "bilal888/sentiment-api:stable"
+        DOCKER_IMAGE_UNSTABLE = "YOUR_DOCKERHUB_USERNAME/sentiment-api:unstable"
+        DOCKER_IMAGE_STABLE   = "YOUR_DOCKERHUB_USERNAME/sentiment-api:stable"
         EC2_IP                = "YOUR_EC2_IP"
         PATH                  = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin"
     }
